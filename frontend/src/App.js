@@ -5,7 +5,7 @@ function App() {
   return (
     <div>
       <Header/>
-      <div className="grid grid-cols-5 m-3 border-4 border-white border-dashed">
+      <div className="grid grid-cols-8 m-3 border-4 border-white border-dashed" style={{ height:'85vh' }}>
         <Contacts/>
         <Messages/>
       </div>
