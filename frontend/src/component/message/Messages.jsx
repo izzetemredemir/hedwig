@@ -1,6 +1,8 @@
 const Messages = () => {
   return (
-    <div>Messages</div>
+    <div className="col-span-3 p-2">
+        Messages
+    </div>
   )
 }
 

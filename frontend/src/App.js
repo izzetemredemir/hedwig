@@ -6,8 +6,10 @@ function App() {
   return (
     <div>
       <Header/>
-      <Contacts/>
-      <Messages/>
+      <div className="grid grid-cols-5 m-3 border-4 border-white border-dashed">
+        <Contacts/>
+        <Messages/>
+      </div>
     </div>
   );
 }
