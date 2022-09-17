@@ -18,12 +18,12 @@ contract Hedwig {
     mapping(uint256 => Session) public sessions;
     mapping(address => uint256[]) public addressToSessionIDs;
 
-    uint constant mod = 10^8;
+    uint constant mod = 10**16;
     
     event SessionStart(address from, address to, uint256 sessionID);
 
     modifier onlyOwners(uint256 _sessionID){
-        require(msg.sender == sessions[_sessionID].from && msg.sender == sessions[_sessionID].to);
+        require(msg.sender == sessions[_sessionID].from || msg.sender == sessions[_sessionID].to, "You are not associated with this session");
         _;
     }
 
@@ -50,7 +50,7 @@ contract Hedwig {
     }
 
     function initiateConnection(uint256 _sessionID, uint256 key) external onlyOwners(_sessionID){
-        require(sessions[_sessionID].key1 != 0 || sessions[_sessionID].key2 != 0, "Keys are initialized");
+        require(sessions[_sessionID].key1 == 0 || sessions[_sessionID].key2 == 0, "Keys are initialized");
         if (sessions[_sessionID].from == msg.sender){
             sessions[_sessionID].key1 = key;
         } else {
@@ -60,7 +60,7 @@ contract Hedwig {
     }
 
     function connect(uint256 _sessionID, uint256 seed) external view returns(uint256 key){
-        require(sessions[_sessionID].key1 != 0 && sessions[_sessionID].key2 != 0, "Both keys should be calculated first.");
+        require(sessions[_sessionID].key1 != 0 && sessions[_sessionID].key2 != 0, "Both keys should be added first.");
         if (sessions[_sessionID].from == msg.sender){
             return (sessions[_sessionID].key2 * seed) % mod;
         } else {
