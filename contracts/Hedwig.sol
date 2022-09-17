@@ -68,10 +68,6 @@ contract Hedwig {
         }
     }
 
-    function decryptData(bytes memory data, uint256 key) external pure returns(bytes memory message){
-        return abi.encode(data, key);
-    }
-
     function getSessions() external view returns(uint256[] memory _sessions){
         return addressToSessionIDs[msg.sender];
     }
