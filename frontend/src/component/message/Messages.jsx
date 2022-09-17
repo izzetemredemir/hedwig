@@ -1,7 +1,7 @@
 import Message from "./Message"
 import MessageField from "./MessageField"
-
-const messages = [
+import { useState } from "react"
+const _messages = [
     {
         message:'ETHBerlin is awesome!',
         isClient:false
@@ -77,14 +77,18 @@ const messages = [
 ]
 
 const Messages = () => {
-  return (
-    <div className="col-span-6 p-2 relative overflow-auto">
-        {messages.map((message) => {
-            return <Message isClient={message.isClient} message={message.message}/>
-        })}
-        <MessageField/>
-    </div>
-  )
+    const[messages, setMessages] = useState(_messages)
+
+    return (
+        <div className="col-span-6 p-2 relative overflow-auto">
+            {
+                messages.map((message) => {
+                    return <Message isClient={message.isClient} message={message.message}/>
+                })
+            }
+            <MessageField/>
+        </div>
+    )
 }
 
 export default Messages
