@@ -2,6 +2,7 @@ import Contact from "./Contact"
 import NewConversation from "./NewConversation"
 import { useState } from "react"
 import { useEffect } from "react"
+import {lensClient,getProfile,getProfiles,getRecommendProfiles,searchProfiles} from '../lensApi'
 
 const lensProfiles = [
   {
@@ -36,7 +37,52 @@ const Contacts = () => {
 
   useEffect(() => {
     // setProfiles(arr)
+    if(profiles.length>0){
+      setProfiles(searchForProfile(search));
+    }
+    else{
+      setProfiles(fetchProfiles(search));
+      
+    }
+ 
+    
   }, [search])
+
+
+  async function fetchProfiles() {
+    try {
+      const response = await lensClient.query(getRecommendProfiles).toPromise()
+      console.log(response);
+      
+      setProfiles(response.data.recommendedProfiles);
+    } catch (err) {
+      console.log('error fetching recommended profiles: ', err)
+    }
+  }
+
+
+  async function searchForProfile(searchString) {
+    try {
+      const response = await lensClient.query(searchProfiles, {
+        query: searchString, type: 'PROFILE'
+      }).toPromise()
+
+
+      if(response.data.search.items ){
+
+        console.log("response.data.search");
+        //setProfiles(response.data.search.items); çalışmıyor
+      }
+
+      console.log(response.data.search.items);
+
+
+
+    } catch (err) {
+      console.log('error searching profiles...', err)
+    }
+  }
+  
 
   return (
     <div className="col-span-2 border-r-4 border-white border-dashed overflow-auto">
