@@ -2,7 +2,11 @@ import Contact from "./Contact"
 import NewConversation from "./NewConversation"
 import { useState } from "react"
 import { useEffect } from "react"
+<<<<<<< HEAD
 import {lensClient,getProfile,getProfiles,getRecommendProfiles,searchProfiles} from '../../lensApi'
+=======
+import {lensClient,getRecommendProfiles,searchProfiles} from '../../lensApi'
+>>>>>>> e04d840e9869e5ac5f11a058cbc2af7abd051483
 
 const lensProfiles = [
   {
@@ -35,6 +39,7 @@ const Contacts = () => {
     setSearch(newSearch);
   }
 
+
   useEffect( () => {
     // setProfiles(arr)
     if(profiles.length>4){
@@ -56,11 +61,12 @@ const Contacts = () => {
      
       console.log("tempProfiles",tempProfiles);
        setProfiles(tempProfiles);
+
       
-    }
+  //   }
  
     
-  }, [search])
+  // }, [search])
 
 
   async function fetchProfiles() {

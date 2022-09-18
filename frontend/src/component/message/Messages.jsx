@@ -76,8 +76,12 @@ const _messages = [
     },
 ]
 
-const Messages = () => {
+const Messages = ({currentContact}) => {
     const[messages, setMessages] = useState(_messages)
+
+    useState(() => {
+        // take messages
+    },[currentContact])
 
     return (
         <div className="col-span-6 p-2 relative overflow-auto">
