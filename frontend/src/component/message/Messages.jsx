@@ -79,6 +79,13 @@ const _messages = [
 const Messages = ({currentContact}) => {
     const[messages, setMessages] = useState(_messages)
 
+    // Start session
+
+    // Initiate connection
+
+    // Connect
+    
+    //update when new message comes
     useState(() => {
         // take messages
     },[currentContact])
