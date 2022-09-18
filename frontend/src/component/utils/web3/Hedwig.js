@@ -90,10 +90,9 @@ const addressToSessionIDsabi = [
   "function addressToSessionIDs(address, uint256) view returns (uint256)"
 ];
 
-
-export const addressToSessionIDs = async()=> {
+export const addressToSessionIDs = async(address)=> {
   const contract = new ethers.Contract(address, addressToSessionIDsabi);
-  const result = await contract.functions.addressToSessionIDs(null,null);
+  const result = await contract.functions.addressToSessionIDs(address);
 
   console.log("result", result);
 }
