@@ -2,7 +2,7 @@ import Contact from "./Contact"
 import NewConversation from "./NewConversation"
 import { useState } from "react"
 import { useEffect } from "react"
-import {lensClient,getProfile,getProfiles,getRecommendProfiles,searchProfiles} from '../lensApi'
+import {lensClient,getRecommendProfiles,searchProfiles} from '../../lensApi'
 
 const lensProfiles = [
   {
@@ -35,18 +35,18 @@ const Contacts = () => {
     setSearch(newSearch);
   }
 
-  useEffect(() => {
-    // setProfiles(arr)
-    if(profiles.length>0){
-      setProfiles(searchForProfile(search));
-    }
-    else{
-      setProfiles(fetchProfiles(search));
+  // useEffect(() => {
+  //   // setProfiles(arr)
+  //   if(profiles.length>0){
+  //     setProfiles(searchForProfile(search));
+  //   }
+  //   else{
+  //     setProfiles(fetchProfiles(search));
       
-    }
+  //   }
  
     
-  }, [search])
+  // }, [search])
 
 
   async function fetchProfiles() {
