@@ -1,6 +1,7 @@
 import Message from "./Message"
 import MessageField from "./MessageField"
 import { useState } from "react"
+import { startSession, getKey, initiateConnection, connect } from "../utils/web3/Hedwig"
 const _messages = [
     // {
     //     message:'ETHBerlin is awesome!',
@@ -78,12 +79,29 @@ const _messages = [
 
 const Messages = ({currentContact}) => {
     const[messages, setMessages] = useState(_messages)
+    const seed = Math.floor(Math.random() * 100000)
+    let sessionID;
+
+    // Check session
+    const checkSession = async () => {
+        
+    }
 
     // Start session
-
+    const _startSession = async () => {
+        await startSession();
+    }
     // Initiate connection
-
+    const _initiateConnection = async () => {
+        getKey(sessionID, seed)
+        initiateConnection(sessionID, seed)
+    }
     // Connect
+    const _connect = async () => {
+        await connect(sessionID, seed);
+        let key;
+        localStorage.setItem(currentContact, key);
+    }
 
     //update when new message comes
     useState(() => {
