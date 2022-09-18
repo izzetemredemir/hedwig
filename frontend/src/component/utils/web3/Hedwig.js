@@ -1,5 +1,5 @@
 const { ethers } = require("ethers");
-const address = "0x6f29019fa0319e71e6152E4AA409e26bdcfFfD61";
+const address = "0x69be0EF1F785237e920A2A762c5CCcda169DcE63";
 const startSessionabi = [
   "function startSession(address to) returns (uint256 id)"
 ];
@@ -20,10 +20,13 @@ const sessionsabi = [
   
 
 export const sessions = async(index)=> {
-  const contract = new ethers.Contract(address, sessionsabi);
+  const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(address, sessionsabi, signer);
   const result = await contract.functions.sessions(index);
 
   console.log("result", result);
+  return result
 }
 
 const sessionIDabi = [
@@ -32,10 +35,13 @@ const sessionIDabi = [
 
 
 export const sessionID = async()=> {
-  const contract = new ethers.Contract(address, sessionIDabi);
+  const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(address, sessionIDabi, signer);
   const result = await contract.functions.sessionID();
 
   console.log("result", result);
+  return result._value.toNumber();
 }
 
   
@@ -93,9 +99,11 @@ const addressToSessionIDsabi = [
   "function addressToSessionIDs(address, uint256) view returns (uint256)"
 ];
 
-export const addressToSessionIDs = async(address)=> {
-  const contract = new ethers.Contract(address, addressToSessionIDsabi);
-  const result = await contract.functions.addressToSessionIDs(address, address);
+export const addressToSessionIDs = async(address, index)=> {
+  const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(address, addressToSessionIDsabi, signer);
+  const result = await contract.functions.addressToSessionIDs(address, index);
 
   console.log("result", result);
   return result

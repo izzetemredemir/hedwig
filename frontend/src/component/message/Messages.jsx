@@ -1,7 +1,7 @@
 import Message from "./Message"
 import MessageField from "./MessageField"
 import { useState } from "react"
-import { startSession, getKey, initiateConnection, sessions, addressToSessionIDs, connect } from "../utils/web3/Hedwig"
+import { startSession, getKey, initiateConnection, sessions, sessionID, connect } from "../utils/web3/Hedwig"
 // import { ethers } from "hardhat"
 import CryptoJS from "crypto-js";
 
@@ -83,18 +83,18 @@ const _messages = [
 const Messages = ({ }) => {
     const [messages, setMessages] = useState(_messages);
     const [connected, setConnected] = useState(false);
-    const seed = Math.floor(Math.random() * 100000)
 
     const currentContact = '0x40af0341fBaE8b6f876eC0e5e0DfFe2Bb0A7763E'
     // Check session
     const checkSession = async () => {
-        const sessionsA = await addressToSessionIDs(window.ethereum.selectedAddress);
-        const sessionsB = await addressToSessionIDs(currentContact);
-        for(let i=0; i<sessionsA; i++){
-            for(let k=0; k<sessionsB; k++){
-                if(sessionsA[i]===sessionsB[i]){
-                    return sessionsA[i];
-                }
+        const maxSession = await sessionID();
+        let session
+        for(let i=0; i< maxSession; i++){
+            session = await sessions(i);
+            console.log(session.from, window.ethereum.selectedAddress) 
+            if((session.from == window.ethereum.selectedAddress || session.to == window.ethereum.selectedAddress) && (session.from == currentContact || session.to == currentContact)){
+                console.log(i)
+                return i;
             }
         }
         return null;
@@ -102,12 +102,15 @@ const Messages = ({ }) => {
 
     // Initiate connection
     const _initiateConnection = async (sessionID) => {
+        localStorage.setItem('seed', Math.floor(Math.random() * 100000));
+        const seed = localStorage.getItem('seed');
         const key = await getKey(sessionID, seed)
         await initiateConnection(sessionID, key)
     }
 
     const checkConnection = async (sessionID) => {
         const session = await sessions(sessionID);
+        console.log(session)
         if(session.key1 > 0 && session.key2 > 0){
             return true;
         }
@@ -116,6 +119,7 @@ const Messages = ({ }) => {
 
     // Connect
     const _connect = async (sessionID) => {
+        const seed = localStorage.getItem('seed');
         const key = await connect(sessionID, seed);
         localStorage.setItem(currentContact, key);
         setConnected(true);
@@ -147,7 +151,8 @@ const Messages = ({ }) => {
     // }
 
     const initiate = async () => {
-        const con = await checkConnection(0);
+        const session = await checkSession();
+    console.log(session)
 }
 
     // after fetch activate the mapping 
