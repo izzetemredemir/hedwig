@@ -38,8 +38,8 @@ contract Hedwig {
             0,
             0
         );
-        addressToSessionIDs[msg.sender].push();
-        addressToSessionIDs[to].push();
+        addressToSessionIDs[msg.sender].push(_sessionID);
+        addressToSessionIDs[to].push(_sessionID);
         sessionID.increment();
         emit SessionStart(msg.sender, to, _sessionID);
         return _sessionID;
