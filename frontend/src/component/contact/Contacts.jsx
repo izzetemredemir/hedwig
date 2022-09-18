@@ -1,7 +1,10 @@
 import Contact from "./Contact"
 import NewConversation from "./NewConversation"
-import { useState, useEffect } from "react"
-import {lensClient,getRecommendProfiles,searchProfiles} from '../../lensApi'
+import { useState } from "react"
+import { useEffect } from "react"
+
+import {lensClient,getProfile,getProfiles,getRecommendProfiles,searchProfiles} from '../../lensApi'
+
 
 const lensProfiles = [
   {
@@ -34,33 +37,67 @@ const Contacts = () => {
     setSearch(newSearch);
   }
 
-  useEffect(() => {
-    // setProfiles(arr)
-    // console.log(await fetchProfiles())
-    // if(profiles.length>4){
-    //   //setProfiles(lensProfiles); 
-    // }
-    // else{
-    //   console.log("buf");
-    //   let tempProfiles = fetchProfiles().map(x =>( {
-    //       bio: x.bio,
-    //       handle: x.handle,
-    //       wallet: x.ownedBy,
+
+  useEffect( () => {
+    console.log("buadsf");
+
+   const getUsers = async () => {
+
+    console.log("getUsers");
   
-    //       img: x.picture?(x.picture.original.url.includes("ipfs://")?"https://ipfs.io/ipfs"+x.picture.original.url.split("ipfs:/")[1]:x.picture.original.url):"https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
-    //     })
-    //   );
-    //   console.log("buf232");
-    //   console.log("tempProfiles",tempProfiles);
-    //    setProfiles(tempProfiles); 
-    // }
-  }, [search])
+      let temdata = await  fetchProfiles()
+
+      let tempProfiles  = temdata.map(x =>( {
+        bio: x.bio?x.bio:"bio",
+        handle: x.handle?x.handle:"handle",
+        wallet: x.ownedBy,
+ 
+        img: x.picture?(x.picture.original.url.includes("ipfs://")?"https://ipfs.io/ipfs"+x.picture.original.url.split("ipfs:/")[1]:x.picture.original.url):"https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
+      }));
+
+
+      if (tempProfiles.length > 0){     setProfiles(tempProfiles);}
+ 
+    };
+
+    const searchtUsers = async (handle) => {
+
+  
+      let temdata = await  searchForProfile(handle);
+
+      let tempProfiles  = temdata.map(x =>( {
+        bio: x.bio?x.bio:"bio",
+        handle: x.handle?x.handle:"handle",
+        wallet: x.ownedBy,
+ 
+        img: x.picture?(x.picture.original.url.includes("ipfs://")?"https://ipfs.io/ipfs"+x.picture.original.url.split("ipfs:/")[1]:x.picture.original.url):"https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
+      }));
+
+
+      if (tempProfiles.length > 0){     setProfiles(tempProfiles);}
+ 
+    };
+  
+    if(search){
+      searchtUsers(search);
+    }else{
+      getUsers();
+
+    } 
+    return () => {
+
+    };
+
+    
+   }, [search])
 
 
   async function fetchProfiles() {
     try {
       const response = await lensClient.query(getRecommendProfiles).toPromise()
-      setProfiles(response.data.recommendedProfiles);
+
+      
+      return(response.data.recommendedProfiles);
     } catch (err) {
       console.log('error fetching recommended profiles: ', err)
     }
@@ -72,8 +109,9 @@ const Contacts = () => {
       const response = await lensClient.query(searchProfiles, {
         query: searchString, type: 'PROFILE'
       }).toPromise()
-      console.log(response.data.search.items);
-      return null;
+
+      return (response.data.search.items)
+
     } catch (err) {
       console.log('error searching profiles...', err)
     }
