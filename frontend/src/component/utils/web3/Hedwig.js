@@ -6,9 +6,9 @@ const startSessionabi = [
   "function startSession(address to) returns (uint256 id)"
 ];
 
-export const  startSession = async()=> {
+export const startSession = async (to)=> {
 	const contract = new ethers.Contract(address, startSessionabi, signer);
-	const tx = await contract.functions.startSession(null);
+	const tx = await contract.functions.startSession(to);
 
 	const receipt = await tx.wait();
 	console.log("receipt", receipt);
@@ -19,83 +19,82 @@ const sessionsabi = [
   ];
   
 
-    export const  sessions = async()=> {
-      const contract = new ethers.Contract(address, sessionsabi, signer);
-      const result = await contract.functions.sessions(null);
-  
-      console.log("result", result);
-  }
+export const sessions = async(index)=> {
+  const contract = new ethers.Contract(address, sessionsabi, signer);
+  const result = await contract.functions.sessions(index);
 
-  const sessionIDabi = [
-    "function sessionID() view returns (uint256 _value)"
-  ];
-  
+  console.log("result", result);
+}
 
-    export const  sessionID = async()=> {
-      const contract = new ethers.Contract(address, sessionIDabi, signer);
-      const result = await contract.functions.sessionID();
-  
-      console.log("result", result);
-  }
+const sessionIDabi = [
+  "function sessionID() view returns (uint256 _value)"
+];
+
+
+export const sessionID = async()=> {
+  const contract = new ethers.Contract(address, sessionIDabi, signer);
+  const result = await contract.functions.sessionID();
+
+  console.log("result", result);
+}
 
   
-  const initiateConnectionabi = [
-    "function initiateConnection(uint256 _sessionID, uint256 key)"
-  ];
-  
+const initiateConnectionabi = [
+  "function initiateConnection(uint256 _sessionID, uint256 key)"
+];
 
-    export const  initiateConnection = async()=> {
-      const contract = new ethers.Contract(address, initiateConnectionabi, signer);
-      const tx = await contract.functions.initiateConnection(null,null);
-  
-      const receipt = await tx.wait();
-      console.log("receipt", receipt);
-  }
 
-  const getSessionsabi = [
-   
-    "function getSessions() view returns (uint256[] _sessions)"
-  ];
-  
+export const initiateConnection = async(sessionID, key)=> {
+  const contract = new ethers.Contract(address, initiateConnectionabi, signer);
+  const tx = await contract.functions.initiateConnection(sessionID, key);
 
-    export const  getSessions = async()=> {
-      const contract = new ethers.Contract(address, getSessionsabi, signer);
-      const result = await contract.functions.getSessions();
-  
-      console.log("result", result);
-  }
+  const receipt = await tx.wait();
+  console.log("receipt", receipt);
+}
 
-  const getKeyabi = [
-    "function getKey(uint256 _sessionID, uint256 seed) view returns (uint256 key)"
-  ];
-
-    export const  getKey = async()=> {
-      const contract = new ethers.Contract(address, getKeyabi, signer);
-      const result = await contract.functions.getKey(null,null);
-  
-      console.log("result", result);
-  }
-
-  const connectabi = [
-    "function connect(uint256 _sessionID, uint256 seed) view returns (uint256 key)"
-  ];
+const getSessionsabi = [
+  "function getSessions() view returns (uint256[] _sessions)"
+];
   
 
-    export const  connect = async()=> {
-      const contract = new ethers.Contract(address, connectabi, signer);
-      const result = await contract.functions.connect(null,null);
+export const getSessions = async()=> {
+  const contract = new ethers.Contract(address, getSessionsabi, signer);
+  const result = await contract.functions.getSessions();
+
+  console.log("result", result);
+}
+
+const getKeyabi = [
+  "function getKey(uint256 _sessionID, uint256 seed) view returns (uint256 key)"
+];
+
+export const getKey = async(sessionID, seed)=> {
+  const contract = new ethers.Contract(address, getKeyabi, signer);
+  const result = await contract.functions.getKey(sessionID, seed);
+
+  console.log("result", result);
+}
+
+const connectabi = [
+  "function connect(uint256 _sessionID, uint256 seed) view returns (uint256 key)"
+];
   
-      console.log("result", result);
-  }
 
-  const addressToSessionIDsabi = [
-    "function addressToSessionIDs(address, uint256) view returns (uint256)"
-  ];
-  
+export const connect = async(sessionID, seed)=> {
+  const contract = new ethers.Contract(address, connectabi, signer);
+  const result = await contract.functions.connect(sessionID, seed);
 
-  export const  addressToSessionIDs = async()=> {
-    const contract = new ethers.Contract(address, addressToSessionIDsabi, signer);
-    const result = await contract.functions.addressToSessionIDs(null,null);
+  console.log("result", result);
+}
 
-    console.log("result", result);
+const addressToSessionIDsabi = [
+  "function addressToSessionIDs(address, uint256) view returns (uint256)"
+];
+
+
+export const addressToSessionIDs = async()=> {
+  const contract = new ethers.Contract(address, addressToSessionIDsabi, signer);
+  const result = await contract.functions.addressToSessionIDs(null,null);
+
+  console.log("result", result);
 }

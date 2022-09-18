@@ -2,78 +2,78 @@ import Message from "./Message"
 import MessageField from "./MessageField"
 import { useState } from "react"
 const _messages = [
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:false
-    },
-    {
-        message:'True!',
-        isClient:true
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:false
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:false
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:true
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:false
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:false
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:true
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:false
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:false
-    },
-    {
-        message:'True!',
-        isClient:true
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:false
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:false
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:true
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:false
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:false
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:true
-    },
-    {
-        message:'ETHBerlin is awesome!',
-        isClient:false
-    },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:false
+    // },
+    // {
+    //     message:'True!',
+    //     isClient:true
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:false
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:false
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:true
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:false
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:false
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:true
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:false
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:false
+    // },
+    // {
+    //     message:'True!',
+    //     isClient:true
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:false
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:false
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:true
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:false
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:false
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:true
+    // },
+    // {
+    //     message:'ETHBerlin is awesome!',
+    //     isClient:false
+    // },
 ]
 
 const Messages = ({currentContact}) => {
@@ -84,7 +84,7 @@ const Messages = ({currentContact}) => {
     // Initiate connection
 
     // Connect
-    
+
     //update when new message comes
     useState(() => {
         // take messages
@@ -97,7 +97,12 @@ const Messages = ({currentContact}) => {
                     return <Message isClient={message.isClient} message={message.message}/>
                 })
             }
-            <MessageField/>
+            {_messages.length > 0?
+                <MessageField/>
+                :(
+                    <div>connect</div>
+                )
+            }
         </div>
     )
 }
