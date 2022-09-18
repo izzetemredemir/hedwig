@@ -18,6 +18,8 @@ export const getRecommendProfiles = `
             }
           }
         }
+        bio
+        ownedBy
         handle
         stats {
           totalFollowers
