@@ -2,6 +2,7 @@ import Message from "./Message"
 import MessageField from "./MessageField"
 import { useState } from "react"
 import { startSession, getKey, initiateConnection, sessions, addressToSessionIDs, connect } from "../utils/web3/Hedwig"
+// import { ethers } from "hardhat"
 import CryptoJS from "crypto-js";
 
 const _messages = [
@@ -80,13 +81,14 @@ const _messages = [
 ]
 
 const Messages = ({ }) => {
-    const[messages, setMessages] = useState(_messages)
+    const [messages, setMessages] = useState(_messages);
+    const [connected, setConnected] = useState(false);
     const seed = Math.floor(Math.random() * 100000)
 
     const currentContact = '0x40af0341fBaE8b6f876eC0e5e0DfFe2Bb0A7763E'
     // Check session
     const checkSession = async () => {
-        const sessionsA = await addressToSessionIDs();
+        const sessionsA = await addressToSessionIDs(window.ethereum.selectedAddress);
         const sessionsB = await addressToSessionIDs(currentContact);
         for(let i=0; i<sessionsA; i++){
             for(let k=0; k<sessionsB; k++){
@@ -116,6 +118,7 @@ const Messages = ({ }) => {
     const _connect = async (sessionID) => {
         const key = await connect(sessionID, seed);
         localStorage.setItem(currentContact, key);
+        setConnected(true);
     }
 
     const firstUser = async () => {
@@ -129,19 +132,23 @@ const Messages = ({ }) => {
         return sessionID
     }
 
+    // const initiate = async () => {
+    //     let sessionID;
+    //     const session = await checkSession();
+    //     if(session == null) {
+    //         sessionID = await firstUser();
+    //     } else {
+    //         sessionID = await secondUser();
+    //     }
+    //     const con = await checkConnection(sessionID);
+    //     if(con){
+    //         await _connect(sessionID);
+    //     }
+    // }
+
     const initiate = async () => {
-        let sessionID;
-        const session = await checkSession();
-        if(session == null) {
-            sessionID = await firstUser();
-        } else {
-            sessionID = await secondUser();
-        }
-        const con = await checkConnection(sessionID);
-        if(con){
-            await _connect(sessionID);
-        }
-    }
+        const con = await checkConnection(0);
+}
 
     // after fetch activate the mapping 
     // messages.map((message) => {
@@ -155,6 +162,7 @@ const Messages = ({ }) => {
 
     //update when new message comes
     useState(() => {
+        
         // take messages
     },[currentContact])
 
@@ -165,10 +173,10 @@ const Messages = ({ }) => {
                     return <Message isClient={message.isClient} message={message.message}/>
                 })
             }
-            {_messages.length > 0?
+            { connected ?
                 <MessageField currentContact={currentContact}/>
                 :(
-                    <div onClick={() => initiate()}>
+                    <div onClick={async () => await initiate()}>
                         start session
                     </div>
                 )

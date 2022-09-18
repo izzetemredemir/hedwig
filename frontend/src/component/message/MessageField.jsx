@@ -17,7 +17,7 @@ const MessageField = ({ currentContact }) => {
 
   return (
     <div className="sticky bottom-0 left-0 w-full flex">    
-        <input class="bg-black border border-gray-200 text-white block p-2.5 w-11/12" onChange={(e) => handleChange(e)}/>
+        <input className="bg-black border border-gray-200 text-white block p-2.5 w-11/12" onChange={(e) => handleChange(e)}/>
         <div className="bg-white w-1/12 flex align-center justify-center items-center hover:bg-gray-200 cursor-pointer" onClick={async () => await sendMessage()}>
             <svg xmlns="http://www.w3.org/2000/svg" width="32px" height="32px" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 491.022 491.022" >
                 <g>

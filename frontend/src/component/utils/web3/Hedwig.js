@@ -1,12 +1,13 @@
 const { ethers } = require("ethers");
-const provider = new ethers.providers.JsonRpcProvider("<Provider_URL>");      
 const address = "0x6f29019fa0319e71e6152E4AA409e26bdcfFfD61";
 const startSessionabi = [
   "function startSession(address to) returns (uint256 id)"
 ];
 
 export const startSession = async (to)=> {
-	const contract = new ethers.Contract(address, startSessionabi);
+  const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+  const signer = provider.getSigner();
+	const contract = new ethers.Contract(address, startSessionabi, signer);
 	const tx = await contract.functions.startSession(to);
 
 	const receipt = await tx.wait();
@@ -44,7 +45,9 @@ const initiateConnectionabi = [
 
 
 export const initiateConnection = async(sessionID, key)=> {
-  const contract = new ethers.Contract(address, initiateConnectionabi);
+  const provider = new ethers.providers.Web3Provider(window.ethereum, "any");
+  const signer = provider.getSigner();
+  const contract = new ethers.Contract(address, initiateConnectionabi, signer);
   const tx = await contract.functions.initiateConnection(sessionID, key);
 
   const receipt = await tx.wait();
@@ -92,7 +95,8 @@ const addressToSessionIDsabi = [
 
 export const addressToSessionIDs = async(address)=> {
   const contract = new ethers.Contract(address, addressToSessionIDsabi);
-  const result = await contract.functions.addressToSessionIDs(address);
+  const result = await contract.functions.addressToSessionIDs(address, address);
 
   console.log("result", result);
+  return result
 }
