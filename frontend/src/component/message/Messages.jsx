@@ -2,6 +2,8 @@ import Message from "./Message"
 import MessageField from "./MessageField"
 import { useState } from "react"
 import { startSession, getKey, initiateConnection, sessions, addressToSessionIDs, connect } from "../utils/web3/Hedwig"
+import CryptoJS from "crypto-js";
+
 const _messages = [
     // {
     //     message:'ETHBerlin is awesome!',
@@ -135,11 +137,21 @@ const Messages = ({ }) => {
         } else {
             sessionID = await secondUser();
         }
-        const con = checkConnection(sessionID);
+        const con = await checkConnection(sessionID);
         if(con){
-            _connect(sessionID);
+            await _connect(sessionID);
         }
     }
+
+    // after fetch activate the mapping 
+    // messages.map((message) => {
+    //     const key = localStorage.getItem(currentContact);
+    //     var decrypted = CryptoJS.AES.decrypt(message.message, key);
+    //     return {
+    //         message: decrypted,
+    //         isClient: message.isClient,
+    //     }
+    // })
 
     //update when new message comes
     useState(() => {
@@ -154,7 +166,7 @@ const Messages = ({ }) => {
                 })
             }
             {_messages.length > 0?
-                <MessageField/>
+                <MessageField currentContact={currentContact}/>
                 :(
                     <div onClick={() => initiate()}>
                         start session
