@@ -1,5 +1,7 @@
 import Contact from "./Contact"
 import NewConversation from "./NewConversation"
+import { useState } from "react"
+import { useEffect } from "react"
 
 const lensProfiles = [
   {
@@ -25,10 +27,21 @@ const lensProfiles = [
 ]
 
 const Contacts = () => {
+  const [profiles, setProfiles] = useState(lensProfiles);
+  const [search, setSearch] = useState('');
+
+  const handleSearchChange = async (newSearch) => {
+    setSearch(newSearch);
+  }
+
+  useEffect(() => {
+    // setProfiles(arr)
+  }, [search])
+
   return (
     <div className="col-span-2 border-r-4 border-white border-dashed overflow-auto">
-      <NewConversation/>
-      {lensProfiles.map( profile => {
+      <NewConversation handleSearch={handleSearchChange}/>
+      {profiles.map( profile => {
         return <Contact img={profile.img} handle={profile.handle} bio={profile.bio} key={profile.handle}/>
       })}
     </div>
