@@ -14,7 +14,7 @@ const lensProfiles = [
   },
 ]
 
-const Contacts = () => {
+const Contacts = ({ handleUserChange }) => {
   const [profiles, setProfiles] = useState(lensProfiles);
   const [search, setSearch] = useState('');
 
@@ -22,6 +22,10 @@ const Contacts = () => {
     setSearch(newSearch);
   }
 
+  const onUserChange = (wallet) => {
+    console.log(wallet)
+    handleUserChange(wallet);
+  }
 
   useEffect( () => {
     console.log("buadsf");
@@ -107,7 +111,9 @@ const Contacts = () => {
     <div className="col-span-2 border-r-4 border-white border-dashed overflow-auto">
       <NewConversation handleSearch={handleSearchChange}/>
       {profiles.map( profile => {
-        return <Contact img={profile.img} handle={profile.handle} bio={profile.bio} key={profile.handle}/>
+        return <Contact img={profile.img} handle={profile.handle} bio={profile.bio} key={profile.handle} onClick={(e) => {
+          onUserChange(e.target.wallet)
+        }}/>
       })}
     </div>
   )

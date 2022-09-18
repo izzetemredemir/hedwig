@@ -6,7 +6,7 @@ import {useState} from 'react';
 function App() {
   const [contact, setContact] = useState('');
   
-  const handleChange = async (contact) => {
+  const handleChange = (contact) => {
     setContact(contact);
   }
 
