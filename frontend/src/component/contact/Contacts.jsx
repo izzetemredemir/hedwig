@@ -3,7 +3,7 @@ import NewConversation from "./NewConversation"
 import { useState } from "react"
 import { useEffect } from "react"
 
-import {lensClient,getProfile,getProfiles,getRecommendProfiles,searchProfiles} from '../../lensApi'
+import {lensClient,getRecommendProfiles,searchProfiles} from '../../lensApi'
 
 
 const lensProfiles = [
@@ -11,21 +11,6 @@ const lensProfiles = [
     img: 'https://karasakalmt.dev/static/media/self.e517a33e8937d4fea0ae.png',
     handle: 'karasakalmt.lens',
     bio: 'a developer who hackshackshackshacks'
-  },
-  {
-    img: 'https://karasakalmt.dev/static/media/self.e517a33e8937d4fea0ae.png',
-    handle: 'karasakalmt.lens',
-    bio: 'a developer who hacks'
-  },
-  {
-    img: 'https://karasakalmt.dev/static/media/self.e517a33e8937d4fea0ae.png',
-    handle: 'karasakalmt.lens',
-    bio: 'a developer who hacks'
-  },
-  {
-    img: 'https://karasakalmt.dev/static/media/self.e517a33e8937d4fea0ae.png',
-    handle: 'karasakalmt.lens',
-    bio: 'a developer who hacks'
   },
 ]
 

@@ -80,7 +80,7 @@ const _messages = [
 const Messages = ({currentContact}) => {
     const[messages, setMessages] = useState(_messages)
     const seed = Math.floor(Math.random() * 100000)
-    let sessionID;
+    let sessionID=0;
 
     // Check session
     const checkSession = async () => {

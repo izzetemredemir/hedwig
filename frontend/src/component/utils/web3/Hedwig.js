@@ -1,13 +1,12 @@
 const { ethers } = require("ethers");
 const provider = new ethers.providers.JsonRpcProvider("<Provider_URL>");      
-const signer = ethers.Wallet.fromMnemonic("<Mnemonic_Phrase>").connect(provider);
 const address = "0x6f29019fa0319e71e6152E4AA409e26bdcfFfD61";
 const startSessionabi = [
   "function startSession(address to) returns (uint256 id)"
 ];
 
 export const startSession = async (to)=> {
-	const contract = new ethers.Contract(address, startSessionabi, signer);
+	const contract = new ethers.Contract(address, startSessionabi);
 	const tx = await contract.functions.startSession(to);
 
 	const receipt = await tx.wait();
@@ -20,7 +19,7 @@ const sessionsabi = [
   
 
 export const sessions = async(index)=> {
-  const contract = new ethers.Contract(address, sessionsabi, signer);
+  const contract = new ethers.Contract(address, sessionsabi);
   const result = await contract.functions.sessions(index);
 
   console.log("result", result);
@@ -32,7 +31,7 @@ const sessionIDabi = [
 
 
 export const sessionID = async()=> {
-  const contract = new ethers.Contract(address, sessionIDabi, signer);
+  const contract = new ethers.Contract(address, sessionIDabi);
   const result = await contract.functions.sessionID();
 
   console.log("result", result);
@@ -45,7 +44,7 @@ const initiateConnectionabi = [
 
 
 export const initiateConnection = async(sessionID, key)=> {
-  const contract = new ethers.Contract(address, initiateConnectionabi, signer);
+  const contract = new ethers.Contract(address, initiateConnectionabi);
   const tx = await contract.functions.initiateConnection(sessionID, key);
 
   const receipt = await tx.wait();
@@ -58,7 +57,7 @@ const getSessionsabi = [
   
 
 export const getSessions = async()=> {
-  const contract = new ethers.Contract(address, getSessionsabi, signer);
+  const contract = new ethers.Contract(address, getSessionsabi);
   const result = await contract.functions.getSessions();
 
   console.log("result", result);
@@ -69,7 +68,7 @@ const getKeyabi = [
 ];
 
 export const getKey = async(sessionID, seed)=> {
-  const contract = new ethers.Contract(address, getKeyabi, signer);
+  const contract = new ethers.Contract(address, getKeyabi);
   const result = await contract.functions.getKey(sessionID, seed);
 
   console.log("result", result);
@@ -81,7 +80,7 @@ const connectabi = [
   
 
 export const connect = async(sessionID, seed)=> {
-  const contract = new ethers.Contract(address, connectabi, signer);
+  const contract = new ethers.Contract(address, connectabi);
   const result = await contract.functions.connect(sessionID, seed);
 
   console.log("result", result);
@@ -93,7 +92,7 @@ const addressToSessionIDsabi = [
 
 
 export const addressToSessionIDs = async()=> {
-  const contract = new ethers.Contract(address, addressToSessionIDsabi, signer);
+  const contract = new ethers.Contract(address, addressToSessionIDsabi);
   const result = await contract.functions.addressToSessionIDs(null,null);
 
   console.log("result", result);
